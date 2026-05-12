@@ -1,0 +1,206 @@
+@import "clash-grotesk.css";
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    --background: 240 27.9% 5.7%;
+    --foreground: 210 40% 98%;
+
+    --card: 222.2 84% 4.9%;
+    --card-foreground: 210 40% 98%;
+
+    --popover: 222.2 84% 4.9%;
+    --popover-foreground: 210 40% 98%;
+
+    --primary: 174 72% 56%;
+    --primary-foreground: 0 0% 0%;
+
+    --secondary: 160 84% 39%;
+    --secondary-foreground: 218 11% 65%;
+
+    --muted: 217.2 32.6% 17.5%;
+    --muted-foreground: 215 20.2% 65.1%;
+
+    --accent: 217.2 32.6% 17.5%;
+    --accent-foreground: 210 40% 98%;
+
+    --destructive: 0 62.8% 30.6%;
+    --destructive-foreground: 210 40% 98%;
+
+    --border: 217.2 32.6% 17.5%;
+    --input: 217.2 32.6% 17.5%;
+    --ring: 174 72% 56%;
+
+    --radius: 0.5rem;
+  }
+}
+
+/* global elements */
+@layer base {
+  html[data-scroll-orientation="horizontal"] {
+    body {
+      @apply w-fit;
+    }
+    [data-scroll-container] {
+      @apply flex;
+    }
+  }
+  * {
+    @apply border-border;
+  }
+  html {
+    @apply antialiased;
+  }
+  body {
+    @apply bg-background text-foreground cursor-none;
+  }
+  body::before {
+    content: "";
+    position: fixed;
+    inset: 0;
+    z-index: 9980;
+    pointer-events: none;
+    opacity: 0.035;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E");
+    background-repeat: repeat;
+    background-size: 128px 128px;
+  }
+
+  section {
+    scroll-margin-top: 60px;
+  }
+}
+
+/* custom scrollbar */
+@layer base {
+  ::-webkit-scrollbar {
+    @apply h-2.5 w-2 transition;
+  }
+  ::-webkit-scrollbar-track {
+    @apply bg-background;
+  }
+  ::-webkit-scrollbar-thumb {
+    @apply bg-muted;
+  }
+  ::-webkit-scrollbar-thumb:active {
+    @apply bg-primary;
+  }
+}
+
+/* custom styles */
+@layer base {
+  .clash-grotesk {
+    font-family: "ClashGrotesk-Variable", sans-serif;
+  }
+  .text-gradient {
+    @apply bg-gradient-to-br from-primary to-secondary bg-clip-text text-transparent;
+  }
+  .nav-link {
+    @apply relative px-3 py-1.5 text-sm font-medium lowercase tracking-wide text-slate-400 rounded-full transition-all duration-200 hover:text-slate-100 hover:bg-white/5;
+  }
+  .nav-active {
+    @apply text-slate-100 bg-white/5;
+  }
+
+  /* blinking animation */
+  @keyframes blink {
+    from {
+      opacity: 1;
+    }
+    to {
+      opacity: 0;
+    }
+  }
+  .animate-blink {
+    animation: blink 1s infinite;
+  }
+
+  /* section divider */
+  .section-divider {
+    @apply w-full my-4 border-0 border-none;
+    height: 1px;
+    background: linear-gradient(to right, transparent, #2dd4bf 30%, #06b6d4 50%, #2dd4bf 70%, transparent);
+    opacity: 0.35;
+  }
+  @keyframes spin-gradient {
+    0%   { background-position: 0% 50%; }
+    50%  { background-position: 100% 50%; }
+    100% { background-position: 0% 50%; }
+  }
+  @keyframes marquee {
+    from { transform: translateX(0); }
+    to   { transform: translateX(-50%); }
+  }
+  .animate-marquee {
+    animation: marquee 20s linear infinite;
+  }
+
+  .animated-border-card {
+    background: linear-gradient(270deg, #2dd4bf, #06b6d4, #10b981, #2dd4bf);
+    background-size: 300% 300%;
+    animation: spin-gradient 4s ease infinite;
+  }
+
+  /* spotlight cursor glow */
+  .spotlight {
+    pointer-events: none;
+    position: fixed;
+    inset: 0;
+    z-index: 9970;
+    transition: opacity 0.3s;
+    background: radial-gradient(
+      600px circle at var(--x, 50%) var(--y, 50%),
+      rgba(45, 212, 191, 0.07) 0%,
+      transparent 70%
+    );
+  }
+
+  /* dot grid background */
+  .dot-grid {
+    position: fixed;
+    inset: 0;
+    z-index: -1;
+    background-image: radial-gradient(circle, rgba(45,212,191,0.12) 1px, transparent 1px);
+    background-size: 32px 32px;
+    mask-image: radial-gradient(ellipse 80% 80% at 50% 50%, black 40%, transparent 100%);
+    pointer-events: none;
+  }
+
+  /* bento card hover glow */
+  .bento-card {
+    @apply relative overflow-hidden rounded-2xl border border-white/10 bg-white/5 backdrop-blur-md transition-all duration-300;
+  }
+  .bento-card:hover {
+    @apply border-primary/30 shadow-[0_0_30px_rgba(45,212,191,0.12)];
+    transform: translateY(-2px);
+  }
+
+  /* floating nav pill */
+  .nav-pill {
+    @apply fixed top-4 left-1/2 -translate-x-1/2 z-50 flex items-center gap-1 rounded-full border border-white/10 bg-background/80 px-3 py-1.5 shadow-xl backdrop-blur-xl;
+  }
+
+  @keyframes float {
+    0%, 100% { transform: translateY(0px); }
+    50% { transform: translateY(-6px); }
+  }
+  .animate-float {
+    animation: float 4s ease-in-out infinite;
+  }
+
+  @keyframes shimmer {
+    0% { background-position: -200% center; }
+    100% { background-position: 200% center; }
+  }
+  .shimmer-text {
+    background: linear-gradient(90deg, #2dd4bf 0%, #fff 40%, #2dd4bf 60%, #06b6d4 100%);
+    background-size: 200% auto;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    animation: shimmer 3s linear infinite;
+  }
+}
